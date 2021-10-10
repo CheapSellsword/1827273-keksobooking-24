@@ -14,25 +14,25 @@ function swapAndRoundNums(a, b) {
     a = b;
     b = swap;
   }
+
+ //https://stackoverflow.com/questions/27142657/how-to-write-a-function-that-returns-an-error-in-javascript
+  if (a < 0 || a === b) {
+    throw new Error("Числа не должны быть отрицательными или равными друг-другу.");
+  }
+
 };
 
 function getRandomWholeNum(min, max) {
-  swapAndRoundNums(min, max);
 
-  if (min < 0 || min === max) {
-    return null;
-  }
+  swapAndRoundNums(min, max);
 
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
 
 function getRandomNumWithDecimals(min, max, decimals) {
-  swapAndRoundNums(min, max);
 
-  if (min < 0 || min === max) {
-    return null;
-  }
+  swapAndRoundNums(min, max);
 
   return Number((Math.random() * (max - min) + min).toFixed(decimals));
 };
