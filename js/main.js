@@ -130,7 +130,7 @@ function getOffers () {
       photos: getRandomPhotos(),
     };
 
-    const description = function getDescription() {
+    const description = function () {
       let descriptionText = '';
 
       if (offer.type === 'palace') {
