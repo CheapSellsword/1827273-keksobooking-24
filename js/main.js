@@ -130,7 +130,7 @@ function getOffers () {
       photos: getRandomPhotos(),
     };
 
-    const description = function () {
+    const getDescription = function () {
       let descriptionText = '';
 
       if (offer.type === 'palace') {
@@ -148,7 +148,7 @@ function getOffers () {
       offer.description = descriptionText;
     };
 
-    description();
+    getDescription();
 
     const authorPlusOffer = Object.assign({}, author, offer);
     tenOffers.push(authorPlusOffer);
