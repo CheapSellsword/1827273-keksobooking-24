@@ -63,13 +63,13 @@ function getNonRepeatingNums () {
 function getPlace () {
   const places = ['palace', 'house', 'bungalow', 'hotel', 'flat'];
 
-  return places[Math.floor(Math.random()*places.length)];
+  return places[getRandomPositiveInteger(0, places.length - 1)];
 }
 
 function getCheckInOut() {
   const checks = ['12:00', '13:00', '14:00'];
 
-  return checks[Math.floor(Math.random()*checks.length)];
+  return checks[getRandomPositiveInteger(0, checks.length - 1)];
 }
 
 function getRandomFeats () {
@@ -90,7 +90,7 @@ function getRandomPhotos () {
 function getRandomTitle () {
   const titles = ['Прекрасный вид!', 'Удобное расположение!', 'Низкая цена!', 'Лучшее предложение!'];
 
-  return titles[(getRandomPositiveInteger(0, titles.length - 1))];
+  return titles[getRandomPositiveInteger(0, titles.length - 1)];
 }
 
 
