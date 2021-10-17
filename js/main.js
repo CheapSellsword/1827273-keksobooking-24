@@ -62,23 +62,20 @@ function getNonRepeatingNums () {
 
 function getPlace () {
   const places = ['palace', 'house', 'bungalow', 'hotel', 'flat'];
-  const place = places[Math.floor(Math.random()*places.length)];
 
-  return place;
+  return places[Math.floor(Math.random()*places.length)];
 }
 
 function getCheckInOut() {
   const checks = ['12:00', '13:00', '14:00'];
-  const checkInOut = checks[Math.floor(Math.random()*checks.length)];
 
-  return checkInOut;
+  return checks[Math.floor(Math.random()*checks.length)];
 }
 
 function getRandomFeats () {
   const feats = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  const randomFeats = feats.slice(getRandomPositiveInteger(0, feats.length));
 
-  return randomFeats;
+  return feats.slice(getRandomPositiveInteger(0, feats.length));
 }
 
 function getRandomPhotos () {
@@ -87,26 +84,24 @@ function getRandomPhotos () {
     'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
     'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
   ];
-  const randomPhotos = photos.slice(getRandomPositiveInteger(0, photos.length - 1));
-
-  return randomPhotos;
+  return photos.slice(getRandomPositiveInteger(0, photos.length - 1));
 }
 
 function getRandomTitle () {
   const titles = ['Прекрасный вид!', 'Удобное расположение!', 'Низкая цена!', 'Лучшее предложение!'];
-  const randomTitle = titles[Math.floor(Math.random()*titles.length)];
 
-  return randomTitle;
+  return titles[(getRandomPositiveInteger(0, titles.length - 1))];
 }
 
 
-// <<<Функция для возвращения массива из 10 предложений>>>
+// <<<Функция для возвращения массива из 10 объявлений>>>
 
 function getOffers () {
 
+  const offersRequired = 10;
   const tenOffers = [];
-  // eslint-disable-next-line id-length
-  for (let i = 0; i < 10; i++) {
+
+  for (let authorCount = 0; authorCount < offersRequired; authorCount++) {
     const author = {
       avatar: `img/avatars/user${  getNonRepeatingNums()  }.png`,
     };
@@ -150,7 +145,7 @@ function getOffers () {
 
     getDescription();
 
-    const authorPlusOffer = Object.assign({}, author, offer);
+    const authorPlusOffer = {author, offer};
     tenOffers.push(authorPlusOffer);
   }
 
