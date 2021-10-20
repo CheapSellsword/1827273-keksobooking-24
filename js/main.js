@@ -1,2 +1,2 @@
-import * as util from './modules/util.js';
-util.getOffers();
+import * as data from './modules/data.js';
+data.getOffers();
