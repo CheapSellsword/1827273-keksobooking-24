@@ -1,4 +1,4 @@
-import * as util from './modules/util.js';
+import * as util from './util.js';
 
 // <<<Функции для свойств объекта offer>>>
 
