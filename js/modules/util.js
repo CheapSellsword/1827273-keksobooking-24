@@ -58,4 +58,4 @@ function getNonRepeatingNums () {
 }
 
 
-export {getRandomPositiveInteger, getRandomPositiveFloat, getNum, createArrayOfNums, getNonRepeatingNums};
+export {getRandomPositiveInteger, getRandomPositiveFloat, getNonRepeatingNums};
