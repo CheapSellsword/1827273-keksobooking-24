@@ -3,9 +3,7 @@
 import * as data from './data.js';
 
 const cardTemplate = document.querySelector('#card').content;
-let popupTemplate = cardTemplate.querySelector('.popup');
-
-
+const popupTemplate = cardTemplate.querySelector('.popup');
 
 let offer = data.getOffers();
 
@@ -25,54 +23,15 @@ let popupClone = popupTemplate.cloneNode(true);
 
 popupClone.children[1].textContent = title;
 popupClone.children[2].textContent = address;
-popupClone.children[3].textContent = price;
-popupClone.children[4].textContent = type;
-popupClone.children[5].textContent = rooms;
-popupClone.children[6].textContent = guests;
-popupClone.children[7].textContent = features;
-popupClone.children[8].textContent = description;
-popupClone.children[9].textContent = photos;
-popupClone.children[0].textContent = avatar
 
 
 
 
+
+/*
 console.log(offer);
 console.log(popupTemplate);
 console.log(title);
 console.log(popupTemplate.children)
 console.log(popupClone);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//const getLog = function() {
-
-//};
-
-//export {getLog};
+*/
