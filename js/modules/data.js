@@ -42,10 +42,12 @@ function getOffers () {
 
   const offersRequired = 10;
   const tenOffers = [];
+  const numsArray = util.createArrayOfNums(1, offersRequired);
+  const shuffledNums = util.shuffleArray(numsArray);
 
   for (let authorCount = 0; authorCount < offersRequired; authorCount++) {
     const author = {
-      avatar: `img/avatars/user${  util.getNonRepeatingNums()  }.png`,
+      avatar: `img/avatars/user${ shuffledNums[authorCount]  }.png`,
     };
 
     const location = {

@@ -1,37 +1,49 @@
-/* eslint-disable */
-
 import * as data from './data.js';
 
-let offer = data.getOffers()[0];
+const offer = data.getOffers()[0];
 
-let title       = offer.offer.title;
-let address     = offer.offer.address;
-let price       = offer.offer.price;
-let type        = offer.offer.type;
-let rooms       = offer.offer.rooms;
-let guests      = offer.offer.guests;
-let checkin     = offer.offer.checkin;
-let checkout    = offer.offer.checkout;
-let features    = offer.offer.features;
-let description = offer.offer.description;
-let photos      = offer.offer.photos;
-let avatar      = offer.author.avatar;
+const title       = offer.offer.title;
+const address     = offer.offer.address;
+const price       = offer.offer.price;
+const type        = offer.offer.type;
+const rooms       = offer.offer.rooms;
+const guests      = offer.offer.guests;
+const checkin     = offer.offer.checkin;
+const checkout    = offer.offer.checkout;
+const features    = offer.offer.features;
+const photos      = offer.offer.photos;
+const avatar      = offer.author.avatar;
+const description = offer.offer.description;
 
 const cardTemplate = document.querySelector('#card').content;
-let popupClone = cardTemplate.querySelector('.popup').cloneNode(true);
+const popupClone = cardTemplate.querySelector('.popup').cloneNode(true);
 
-popupClone.querySelector('.popup__title').innerHTML = title;
-popupClone.querySelector('.popup__text--address').innerHTML = address;
-popupClone.querySelector('.popup__text--price').innerHTML = price + ' ₽/ночь';
-popupClone.querySelector('.popup__text--capacity').innerHTML = rooms + ' комнаты для ' + guests + ' гостей';
-popupClone.querySelector('.popup__text--time').innerHTML = 'Заезд после ' + checkin + ', выезд до ' + checkout;
-popupClone.querySelector('.popup__description').innerHTML = description;
+// Не уверен что это лучший способ скрывать блоки при отсутствии данных. Можете посоветовать как сделать по другому или, всё-таки, оставить так?
+if (!title)       { popupClone.querySelector('.popup__title').classList.add('visually-hidden'); }
+if (!address)     { popupClone.querySelector('.popup__text--address').classList.add('visually-hidden'); }
+if (!price)       { popupClone.querySelector('.popup__text--price').classList.add('visually-hidden'); }
+if (!type)        { popupClone.querySelector('.popup__type').classList.add('visually-hidden'); }
+if (!features)    { popupClone.querySelector('.popup__features').classList.add('visually-hidden'); }
+if (!photos)      { popupClone.querySelector('.popup__photos').classList.add('visually-hidden'); }
+if (!avatar)      { popupClone.querySelector('.popup__avatar').classList.add('visually-hidden'); }
+if (!description) { popupClone.querySelector('.popup__description').classList.add('visually-hidden'); }
 
+if (!rooms || !guests)     { popupClone.querySelector('.popup__text--capacity').classList.add('visually-hidden'); }
+if (!checkin || !checkout) { popupClone.querySelector('.popup__text--time').classList.add('visually-hidden'); }
+
+// <<< Заполнение блоков >>>
+popupClone.querySelector('.popup__title').textContent = title;
+popupClone.querySelector('.popup__text--address').textContent = address;
+popupClone.querySelector('.popup__text--price').textContent = `${price  } ₽/ночь`;
+popupClone.querySelector('.popup__text--capacity').textContent = `${rooms  } комнаты для ${  guests  } гостей`;
+popupClone.querySelector('.popup__text--time').textContent = `Заезд после ${  checkin  }, выезд до ${  checkout}`;
+popupClone.querySelector('.popup__description').textContent = description;
 
 // <<< Сопоставление типов жилья с подписями >>>
 
 let typeTitle;
-let getTypeTitle = function (type) {
+// eslint-disable-next-line no-shadow
+const getTypeTitle = function (type) {
 
   if (type === 'flat') {
     typeTitle = 'Квартира';
@@ -48,26 +60,33 @@ let getTypeTitle = function (type) {
   } else if (type === 'hotel') {
     typeTitle = 'Отель';
 
-  } else { typeTitle = ''}
+  } else { typeTitle = '';}
 
-return typeTitle;
+  return typeTitle;
 };
 
 getTypeTitle(type);
 
-popupClone.querySelector('.popup__type').innerHTML = typeTitle;
+popupClone.querySelector('.popup__type').textContent = typeTitle;
 
 
 // <<< Выведение удобств в объявление >>>
-// Применил решение из демонстрации 7.8
 
 const featureContainer = popupClone.querySelector('.popup__features');
+
+for (let i = 0; i < featureContainer.children.length; i++) {
+  featureContainer.children[i].classList.add('visually-hidden');
+}
+
 const featureListFragment = document.createDocumentFragment();
 
 features.forEach ((feature) => {
-  const featureListItem = featureContainer.querySelector('.popup__feature--' + feature);
+  const featureListItem = featureContainer.querySelector(`.popup__feature--${  feature}`);
+  featureListItem.classList.remove('visually-hidden');
   featureListFragment.append(featureListItem);
-})
+});
+
+featureContainer.append(featureListFragment);
 
 
 // <<< Выведение фотографий >>>
@@ -75,16 +94,17 @@ features.forEach ((feature) => {
 const photoContainer = popupClone.querySelector('.popup__photos');
 const photoListFragment = document.createDocumentFragment();
 
-  for (let i = 0; i < photos.length; i++ ) {
-  let photoListItem = photoContainer.querySelector('.popup__photo').cloneNode(true);
+for (let i = 0; i < photos.length; i++ ) {
+  const photoListItem = photoContainer.querySelector('.popup__photo').cloneNode(true);
   photoListItem.src = photos[i];
   photoListFragment.append(photoListItem);
-  photoContainer.append(photoListFragment);
 }
 
-let notice = document.querySelector('.notice');
-notice.appendChild(popupClone);
+photoContainer.querySelector('.popup__photo').remove();
 
-// Почему avatar = "img/avatars/userundefined.png"? Точнее, почему GetNonRepetingNums выдает undefined?
+photoContainer.append(photoListFragment);
+
 popupClone.querySelector('.popup__avatar').src = avatar;
-console.log(data.getOffers()[0]);
+
+const mapCanvas = document.querySelector('#map-canvas');
+mapCanvas.append(popupClone);
