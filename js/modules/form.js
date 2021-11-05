@@ -56,31 +56,61 @@ priceInput.addEventListener('input', () => {
 // <<< Валидация комнат и гостей >>>
 
 let roomNumberSelect = adForm.querySelector('#room_number');
-let roomNumbers = roomNumberSelect.children;
-
 let capacitySelect = adForm.querySelector('#capacity')
-let capacity = capacitySelect.children;
 
-//function onRoomChange (evt) {
-//  if (evt.target.matches('option')) {
-//    console.log('o')
-//  }
-//}
+let roomOptions = roomNumberSelect.querySelectorAll('option');
+let capacityOptions = capacitySelect.querySelectorAll('option');
 
-roomNumberSelect.addEventListener('click', () => {
+capacitySelect.innerHTML='';
+capacitySelect.appendChild(capacityOptions[2]);
 
-if (roomNumbers[0].selected && !capacity[0]) {
-  roomNumberSelect.setCustomValidity('nooooooo')
+function giveSelection(roomValue) {
+  capacitySelect.innerHTML='';
+
+    if (roomValue == 1) {
+      capacitySelect.appendChild(capacityOptions[2]);
+
+    } else if (roomValue == 2) {
+      capacitySelect.appendChild(capacityOptions[2]);
+      capacitySelect.appendChild(capacityOptions[1]);
+
+    } else if (roomValue == 3) {
+      capacitySelect.appendChild(capacityOptions[2]);
+      capacitySelect.appendChild(capacityOptions[1]);
+      capacitySelect.appendChild(capacityOptions[0]);
+
+    } else {
+      capacitySelect.appendChild(capacityOptions[3]);
+    }
 }
-})
+
+function onRoomChange (evt) {
+
+    giveSelection(evt.target.value)
+
+    console.log(evt.target.value)
+    console.log(capacitySelect)
+}
+
+roomNumberSelect.addEventListener('change', onRoomChange)
 
 
-
-//console.log(roomNumberSelect);
+console.log(capacityOptions);
+console.log(roomNumberSelect);
 //console.log(roomNumbers);
-//console.log(capacitySelect);
+console.log(capacitySelect);
 //console.log(priceInput.value)
 //console.log(titleInput.validity)
 //console.log(priceInput);
 //console.log(adForm);
 
+
+  /*for (let i = 0; i < capacityOptions.length; i++) {
+
+    if (capacityOptions[i].value === roomValue) {
+      capacitySelect.appendChild(capacityOptions[i]);
+
+    } else if (capacityOptions[i].value !== roomValue) {
+      capacitySelect.appendChild(capacityOptions[3])
+    }
+  }*/
