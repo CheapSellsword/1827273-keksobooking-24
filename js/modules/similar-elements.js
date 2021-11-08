@@ -106,5 +106,5 @@ photoContainer.append(photoListFragment);
 
 popupClone.querySelector('.popup__avatar').src = avatar;
 
-const mapCanvas = document.querySelector('#map-canvas');
-mapCanvas.append(popupClone);
+//const mapCanvas = document.querySelector('#map-canvas');
+//mapCanvas.append(popupClone);
