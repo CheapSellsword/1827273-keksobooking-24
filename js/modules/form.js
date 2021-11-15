@@ -239,10 +239,8 @@ mainMarker.on('moveend', (evt) => {
 
 mainMarker.addTo(map);
 
-// <<< Обычные маркеры >>>
 
-// Задание: Напишите код, который добавит на карту метки объявлений, «обычные».
-// Для отображения используйте данные для разработки, которые мы генерировали несколько заданий назад.
+// <<< Обычные маркеры >>>
 
 const markers = [
   {
@@ -262,11 +260,9 @@ const markers = [
   },
 ];
 
-// как вставлять карточку?
 const popup = L.popup()
   .setLatLng([35.6, 139.9])
-  .setContent(similar.popupClone)
-  .openOn(map);
+  .setContent(similar.popupClone);
 
 markers.forEach(({lat, lng}) => {
 
