@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="leaflet/leaflet.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кексобукинг</title>
   <script type="module" src="js/main.js"></script>
@@ -21,6 +22,8 @@
 
       <!-- Блок для вставки карты -->
       <div class="map__canvas" id="map-canvas"></div>
+
+      <script src="leaflet/leaflet.js"></script>
 
       <!-- Фильтрация объявлений -->
       <div class="map__filters-container">
@@ -48,7 +51,7 @@
           <select name="housing-guests" id="housing-guests" class="map__filter">
             <option value="any" selected>Любое число гостей</option>
             <option value="2">Два гостя</option>
-            <option value="1">Один гость</option>
+            <option value="1">Один гость</option>map
             <option value="0">Не для гостей</option>
           </select>
           <fieldset id="housing-features" class="map__features">
@@ -92,7 +95,7 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text" required>
+          <input id="address" name="address" type="text" required readonly>
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>

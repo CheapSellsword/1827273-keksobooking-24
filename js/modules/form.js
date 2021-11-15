@@ -1,3 +1,5 @@
+import * as similar from './similar-elements.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 1000000;
@@ -96,7 +98,7 @@ function applyMinPriceToType(typeValue) {
   }
 }
 
-const currentSelectedTypeValue = typeSelect.options[typeSelect.selectedIndex].value;
+const currentSelectedTypeValue = typeSelect.value;
 applyMinPriceToType(currentSelectedTypeValue);
 
 priceInput.addEventListener('input', () => {
@@ -117,18 +119,21 @@ priceInput.addEventListener('input', () => {
 const timeInSelect = adForm.querySelector('#timein');
 const timeOutSelect = adForm.querySelector('#timeout');
 
+
 timeInSelect.addEventListener('change', onTimeInChange);
-timeOutSelect.addEventListener('change', onTimeOutChange);
 
 function onTimeInChange(evt) {
   syncSelectedTimeIn(evt.target.selectedIndex);
 }
-function onTimeOutChange(evt) {
-  syncSelectedTimeOut(evt.target.selectedIndex);
-}
-
 function syncSelectedTimeIn(selectedTimeInIndex) {
   timeOutSelect.selectedIndex = selectedTimeInIndex;
+}
+
+
+timeOutSelect.addEventListener('change', onTimeOutChange);
+
+function onTimeOutChange(evt) {
+  syncSelectedTimeOut(evt.target.selectedIndex);
 }
 function syncSelectedTimeOut(selectedTimeOutIndex) {
   timeInSelect.selectedIndex = selectedTimeOutIndex;
@@ -155,7 +160,6 @@ function disablePage() {
   });
 }
 
-// eslint-disable-next-line no-unused-vars
 function enablePage() {
   adForm.classList.remove('ad-form--disabled');
   formFieldsets.forEach((fieldset) => {
@@ -170,4 +174,119 @@ function enablePage() {
 }
 
 disablePage();
-enablePage();
+
+
+// <<< Карта >>>
+
+const initialMapCoordinates = {
+  // Токио
+  lat: 35.65283,
+  lng: 139.83947,
+};
+
+const map = L.map('map-canvas')
+  .on('load', () => {
+    enablePage();
+  })
+
+  .setView({
+    lat: initialMapCoordinates.lat,
+    lng: initialMapCoordinates.lng,
+  }, 10);
+
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+).addTo(map);
+
+
+// <<< Главный маркер и синхронизация с адресом >>>
+
+const mainMarkerIcon = L.icon({
+  iconUrl: '/img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
+const mainMarker = L.marker(
+  {
+    lat: initialMapCoordinates.lat,
+    lng: initialMapCoordinates.lng,
+  },
+  {
+    draggable: true,
+    icon: mainMarkerIcon,
+  },
+);
+
+const addressInput = adForm.querySelector('#address');
+
+addressInput.value = `${initialMapCoordinates.lat  }, ${  initialMapCoordinates.lng}`;
+
+mainMarker.on('moveend', (evt) => {
+  const markerCoordinates = evt.target.getLatLng();
+
+  markerCoordinates.lat = Math.floor(markerCoordinates.lat * 100000) / 100000;
+  markerCoordinates.lat.toFixed(5);
+
+  markerCoordinates.lng = Math.floor(markerCoordinates.lng * 100000) / 100000;
+  markerCoordinates.lng.toFixed(5);
+
+  addressInput.value = `${markerCoordinates.lat  }, ${  markerCoordinates.lng}`;
+});
+
+mainMarker.addTo(map);
+
+// <<< Обычные маркеры >>>
+
+// Задание: Напишите код, который добавит на карту метки объявлений, «обычные».
+// Для отображения используйте данные для разработки, которые мы генерировали несколько заданий назад.
+
+const markers = [
+  {
+    title: '',
+    lat: 35.50000,
+    lng: 139.70000,
+  },
+  {
+    title: '',
+    lat: 35.60000,
+    lng: 139.80000,
+  },
+  {
+    title: '',
+    lat: 35.70000,
+    lng: 139.90000,
+  },
+];
+
+// как вставлять карточку?
+const popup = L.popup()
+  .setLatLng([35.6, 139.9])
+  .setContent(similar.popupClone)
+  .openOn(map);
+
+markers.forEach(({lat, lng}) => {
+
+  const icon =L.icon({
+    iconUrl: '/img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  const marker = L.marker({
+    lat,
+    lng,
+  },
+  {
+    icon,
+  },
+  );
+
+  marker.addTo(map);
+  marker.bindPopup(popup);
+});
+
+

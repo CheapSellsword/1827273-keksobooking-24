@@ -1,3 +1,4 @@
+
 import * as data from './data.js';
 
 const offer = data.getOffers()[0];
@@ -108,3 +109,5 @@ popupClone.querySelector('.popup__avatar').src = avatar;
 
 //const mapCanvas = document.querySelector('#map-canvas');
 //mapCanvas.append(popupClone);
+
+export {popupClone};
