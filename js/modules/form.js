@@ -262,7 +262,8 @@ const markers = [
 
 const popup = L.popup()
   .setLatLng([35.6, 139.9])
-  .setContent(similar.popupClone);
+  .setContent(similar.popupClones[0])
+  .openOn(map);
 
 markers.forEach(({lat, lng}) => {
 
